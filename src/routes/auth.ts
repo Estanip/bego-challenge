@@ -6,5 +6,7 @@ export class AuthRoutes {
     public router: Router = Router();
 
     constructor() {
+        this.router.post('/register', this.authController.register);
+        this.router.post('/login', this.authController.login);
     }
 }
