@@ -43,6 +43,8 @@ export class RoutesController {
             const { id } = req.params;
             const { pointAId, pointBId } = req.body;
 
+            if(pointAId === pointBId) return res.status(400).send({ success: false, message: 'Origin and destination cannot be the same' });
+
             const validateRouteAtOrder = await Order.findOne({ route: id, status: 'inProcess' }).exec();
 
             if (validateRouteAtOrder) return res.status(400).send({ success: false, message: 'Cannot update, route is in an order in process' });
@@ -95,6 +97,8 @@ export class RoutesController {
     public async createRoute(req: Request, res: Response) {
         try {
             const { pointAId, pointBId } = req.body;
+
+            if(pointAId === pointBId) return res.status(400).send({ success: false, message: 'Origin and destination cannot be the same' });
 
             const pointA: IPoint = await Point.findById(pointAId).exec();
             const pointB: IPoint = await Point.findById(pointBId).exec();
