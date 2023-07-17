@@ -6,5 +6,9 @@ export class RoutesRoutes {
     public routesController: RoutesController = new RoutesController();
 
     constructor() {
+        this.router.post('/', this.routesController.createRoute);
+        this.router.get('/:id', this.routesController.getRouteById);
+        this.router.put('/:id', this.routesController.updateRouteById);
+        this.router.delete('/:id', this.routesController.deleteRouteById);
     }
 }
