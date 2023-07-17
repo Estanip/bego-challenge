@@ -85,7 +85,7 @@ export class RoutesController {
                     }
 
                     return res.status(200).send({ success: true, message: 'Route successfully updated' });
-                }
+                } else return res.status(400).send({ success: false, message: 'Route does not exists' });
             }
         } catch (error) {
             return res.status(500).send({ success: false, message: error?.message });
