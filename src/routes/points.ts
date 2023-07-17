@@ -6,5 +6,7 @@ export class PointsRoutes {
     public router: Router = Router();
 
     constructor() {
+        this.router.get('/', this.pointsController.getPoints);
+        this.router.get('/coordinates/:placeId', this.pointsController.getPointCoordinates);
     }
 }
