@@ -3,13 +3,14 @@
 _El proyecto consiste de una API con un CRUD para ordenes y rutas de transporte. A su vez permite listar puntos de origen y destino y flota de camiones_
 
 ## Construido con 🛠️
-_Desarrollo en javascript con las siguientes tecnologías: NodeJS, Express, MongoDB, Mongoose _
+_Desarrollo en Javascript con las siguientes tecnologías: NodeJS, Express, MongoDB, Mongoose _
 
 ### Pre-requisitos 📋
 _Se deberán instalar las siguientes dependecias: _
 
 - [axios](https://www.npmjs.com/package/axios)
 - [body-parser](https://www.npmjs.com/package/body-parser)
+- [cors](https://www.npmjs.com/package/cors)
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - [express](https://www.npmjs.com/package/express)
 - [mongoose](https://www.npmjs.com/package/mongoose)

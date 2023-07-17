@@ -1,5 +1,6 @@
 import * as express from "express";
-import bodyParser = require("body-parser");
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import connection from './db/connection';
 import { Routes } from "./routes/index";
 import { validateToken } from "./middlewares/validateToken";
@@ -21,6 +22,7 @@ class App {
     private setConfig(): void {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(cors());
     }
 
     private setRoutes(): void {
