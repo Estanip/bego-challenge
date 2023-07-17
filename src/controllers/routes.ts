@@ -24,7 +24,7 @@ export class RoutesController {
         try {
             const { id } = req.params;
 
-            const validateRouteAtOrder = await Order.aggregate([{$match: {route: id, status: 'inProcess'}}])
+            const validateRouteAtOrder = await Order.aggregate([{ $match: { route: id, status: 'inProcess' } }])
 
             if (validateRouteAtOrder?.length > 0) return res.status(400).send({ success: false, message: 'Cannot delete, route is in an order in process' });
             else {
@@ -47,14 +47,17 @@ export class RoutesController {
 
             if (validateRouteAtOrder) return res.status(400).send({ success: false, message: 'Cannot update, route is in an order in process' });
             else {
-                const validateRouteExists = await Route.findById(id).exec();
+                const route: IRoute = await Route.findById(id).exec();
 
-                if (validateRouteExists) {
+                if (route) {
                     if (pointAId && pointBId) {
                         const pointA: IPoint = await Point.findById(pointAId).exec();
                         const pointB: IPoint = await Point.findById(pointBId).exec();
 
                         if (!pointA || !pointB) return res.status(400).send({ success: false, message: 'Point does not exists' });
+
+                        const validateSimilarRoute = await Route.aggregate([{ $match: { from: pointA?.location?.name, to: pointB?.location?.name } }])
+                        if (validateSimilarRoute?.length > 0) return res.status(400).send({ success: false, message: 'Route already exists' });
 
                         await Route.findByIdAndUpdate(id, { from: pointA?.location?.name, to: pointB?.location?.name }).exec();
                     }
@@ -64,6 +67,9 @@ export class RoutesController {
 
                         if (!pointA) return res.status(400).send({ success: false, message: 'Point does not exists' });
 
+                        const validateSimilarRoute = await Route.aggregate([{ $match: { from: pointA?.location?.name, to: route?.to } }])
+                        if (validateSimilarRoute?.length > 0) return res.status(400).send({ success: false, message: 'Route already exists' });
+
                         await Route.findByIdAndUpdate(id, { from: pointA?.location?.name }).exec();
                     }
 
@@ -71,6 +77,9 @@ export class RoutesController {
                         const pointB: IPoint = await Point.findById(pointBId).exec();
 
                         if (!pointB) return res.status(400).send({ success: false, message: 'Point does not exists' });
+
+                        const validateSimilarRoute = await Route.aggregate([{ $match: { from: route?.from, to: pointB?.location?.name, } }])
+                        if (validateSimilarRoute?.length > 0) return res.status(400).send({ success: false, message: 'Route already exists' });
 
                         await Route.findByIdAndUpdate(id, { to: pointB?.location?.name }).exec();
                     }
