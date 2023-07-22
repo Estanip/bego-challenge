@@ -1,41 +1,43 @@
-import * as express from "express";
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import connection from './db/connection';
+import express from "express";
+import cors from "cors";
+import connection from "./db/connection";
 import { Routes } from "./routes/index";
 import { validateToken } from "./middlewares/validateToken";
+import { setSwaggerResponse, setSwaggerRequest } from "./utils/swagger";
 
-import 'dotenv/config';
-
+/* ENV VARIABLES */
+import { loadEnv } from "./env";
+loadEnv();
 class App {
-    public app: express.Application;
-    public routes: Routes = new Routes();
-    public connection = connection();
+  public app;
+  public routes: Routes = new Routes();
+  public connection = connection();
 
-    constructor() {
-        this.app = express();
+  constructor() {
+    this.app = express();
 
-        this.setConfig();
-        this.setRoutes();
-    }
+    setSwaggerResponse(this.app);
+    this.setConfig();
+    this.setRoutes();
+    setSwaggerRequest();
+  }
 
-    private setConfig(): void {
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.app.use(cors());
-    }
+  private setConfig(): void {
+    this.app.use(express.json());
+    this.app.use(cors());
+  }
 
-    private setRoutes(): void {
-        /* Routes without token */
-        this.app.use('/auth', this.routes.authRoutes.router);
+  private setRoutes(): void {
+    /* Routes without token */
+    this.app.use("/auth", this.routes.authRoutes.router);
 
-        /* Routes with token */
-        this.app.use(validateToken);
-        this.app.use('/orders', this.routes.ordersRoutes.router);
-        this.app.use('/points', this.routes.pointsRoutes.router);
-        this.app.use('/trucks', this.routes.trucksroutes.router);
-        this.app.use('/routes', this.routes.routesRoutes.router);
-    }
+    /* Routes with token */
+    this.app.use(validateToken);
+    this.app.use("/orders", this.routes.ordersRoutes.router);
+    this.app.use("/points", this.routes.pointsRoutes.router);
+    this.app.use("/trucks", this.routes.trucksroutes.router);
+    this.app.use("/routes", this.routes.routesRoutes.router);
+  }
 }
 
 export default new App().app;
