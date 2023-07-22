@@ -1,59 +1,86 @@
-import { Request, Response } from 'express';
-import { IUser } from '../interfaces/User';
-import User from '../models/user';
-
+import { NextFunction, Request, Response } from "express";
+import { IUser } from "../interfaces/User";
+import User from "../models/user";
 
 export class AuthController {
-    
-    public async register(req: Request, res: Response) {
-        try {
-            const { email, password } = req.body;
+  public async register(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
 
-            const user: IUser = await User.findOne({ email }).exec();
+      const user: IUser = await User.findOne({ email }).exec();
 
-            if (user) return res.status(404).send({ success: false, message: 'User already exists' });
+      if (user) {
+        res
+          .status(403)
+          .send({ success: false, message: "User already exists" });
 
-            const newUser: IUser = new User({
-                email,
-                password
-            });
+        return next();
+      }
 
-            await newUser.save();
+      await new User({ email, password }).save();
 
-            return res.status(200).send({
-                success: true,
-                message: 'User register successfully'
-            })
+      res.status(200).send({
+        success: true,
+        message: "User register successfully",
+      });
 
-        } catch (error) {
-            return res.status(500).send({ success: false, message: error?.message });
+      return next();
+    } catch (error: unknown) {
+      res.status(500).send({
+        success: false,
+        error,
+        message: "Error when trying to register",
+      });
+      return next(error);
+    }
+  }
+
+  public async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        res.status(403).send({ success: false, message: "Invalid data" });
+        return next();
+      }
+
+      const user: IUser = await User.findOne({ email }).exec();
+
+      if (!user) {
+        res
+          .status(404)
+          .send({ success: false, message: "User does not exists" });
+        return next();
+      }
+
+      if (user) {
+        const validatePassword: boolean = await user.validatePassword(password);
+
+        if (!validatePassword) {
+          res
+            .status(403)
+            .send({ success: false, message: "Incorrect password" });
+
+          return next();
         }
-    };
 
-    public async login(req: Request, res: Response) {
-        try {
-            const { email, password } = req.body;
+        if (validatePassword) {
+          const token = await user.generateToken();
 
-            if (!email || !password) return res.status(404).send({ success: false, message: 'Invalid data' });
+          res
+            .status(200)
+            .send({ success: true, message: "Login successfully", token });
 
-            const user: IUser = await User.findOne({ email }).exec();
-
-            if (!user) return res.status(404).send({ success: false, message: 'User does not exists' });
-
-            if (user) {
-                const validatePassword: boolean = await user.validatePassword(password);
-
-                if (!validatePassword) return res.status(404).send({ success: false, message: 'Incorrect password' });
-                else if (validatePassword) {
-                    const token = await user.generateToken();
-
-                    return res.status(200).send({ success: true, message: 'Login successfully', token })
-                }
-            }
-
-        } catch (error) {
-            return res.status(500).send({ success: false, message: error?.message });
+          return next();
         }
-    };
-
-};
+      }
+    } catch (error: unknown) {
+      res.status(500).send({
+        success: false,
+        error,
+        message: "Error when trying to register",
+      });
+      return next(error);
+    }
+  }
+}

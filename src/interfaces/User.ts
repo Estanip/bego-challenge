@@ -1,8 +1,8 @@
-import { Document } from 'mongoose';
+import { Document } from "mongoose";
 
 export interface IUser extends Document {
-    email: string;
-    password: string;
-    generateToken(): string;
-    validatePassword(password: string): boolean;
-};
+  email: string;
+  password: string;
+  generateToken(): string;
+  validatePassword(password: string): boolean;
+}

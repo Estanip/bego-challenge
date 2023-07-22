@@ -1,74 +1,126 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Order from "../models/order";
-import { IOrder } from "../interfaces/Order";
-
+import { IOrder, Orderstatus } from "../interfaces/Order";
 export class OrdersController {
+  public async createOrder(req: Request, res: Response, next: NextFunction) {
+    try {
+      await new Order(req.body).save();
 
-    public async createOrder(req: Request, res: Response) {
-        try {
-            const { type, description, status, route, truck } = req.body;
+      res
+        .status(200)
+        .send({ success: true, message: "Order succesfully created" });
 
-            const newOrder: IOrder = new Order({
-                type,
-                description,
-                status,
-                route,
-                truck
-            });
+      return next();
+    } catch (error: unknown) {
+      res.status(500).send({
+        success: false,
+        error,
+        message: "Error when trying to create order",
+      });
+      return next(error);
+    }
+  }
 
-            await newOrder.save();
+  public async updateOrderStatus(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { id, status } = req.params;
 
-            return res.status(200).send({ success: true, message: 'Order succesfully created' });
-        } catch (error) {
-            return res.status(500).send({ success: false, message: error?.message });
+      const order = await Order.findByIdAndUpdate(id, { status }).exec();
+
+      if (!order) {
+        return res
+          .status(403)
+          .send({ success: false, message: "Order does not exists" });
+      }
+
+      res
+        .status(200)
+        .send({ success: true, message: "Order succesfully updated" });
+
+      return next();
+    } catch (error: unknown) {
+      res.status(500).send({
+        success: false,
+        error,
+        message: "Error when trying to update order status",
+      });
+      return next(error);
+    }
+  }
+
+  public async deleteOrder(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      const { status }: Orderstatus = await Order.findById(id, "status").exec();
+
+      if (status === "inProcess") {
+        res.status(403).send({
+          success: false,
+          message: "Cannot delete, order status is in process",
+        });
+
+        return next();
+      } else {
+        const order: IOrder = await Order.findByIdAndDelete(id).exec();
+
+        if (order) {
+          res
+            .status(200)
+            .send({ success: true, message: "Order successfully removed" });
+
+          return next();
         }
-    };
 
-    public async updateOrderStatus(req: Request, res: Response) {
-        try {
-            const { id, status } = req.params;
+        res
+          .status(404)
+          .send({ success: false, message: "Order does not exists" });
 
-            const order = await Order.findByIdAndUpdate(id, { status }).exec();
+        return next();
+      }
+    } catch (error: unknown) {
+      res.status(500).send({
+        success: false,
+        error,
+        message: "Error when trying to delete order",
+      });
+      return next(error);
+    }
+  }
 
-            if (!order) return res.status(200).send({ success: false, message: 'Order does not exists' });
-            return res.status(200).send({ success: true, message: 'Order succesfully updated' });
-        } catch (error) {
-            return res.status(500).send({ success: false, message: error?.message });
-        }
-    };
+  public async updateOrder(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
 
-    public async deleteOrder(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
+      const { status }: Orderstatus = await Order.findById(id, "status").exec();
 
-            const { status } = await Order.findById(id, 'status').exec();
+      if (status === "inProcess") {
+        res.status(403).send({
+          success: false,
+          message: "Cannot update, order status is in process",
+        });
 
-            if (status === 'inProcess') return res.status(400).send({ success: false, message: 'Cannot delete, order status is in process' });
-            else {
-                const order: IOrder = await Order.findByIdAndDelete(id).exec();
+        return next();
+      }
 
-                if (order) return res.status(200).send({ success: true, message: 'Order successfully removed' });
-                else return res.status(400).send({ success: false, message: 'Order does not exists' });
-            }
-        } catch (error) {
-            return res.status(500).send({ success: false, message: error?.message });
-        }
-    };
+      await Order.findByIdAndUpdate(id, req.body).exec();
 
-    public async updateOrder(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
+      res
+        .status(200)
+        .send({ success: true, message: "Order succesfully updated" });
 
-            const { status } = await Order.findById(id, 'status').exec();
-
-            if (status === 'inProcess') return res.status(400).send({ success: false, message: 'Cannot update, order status is in process' });
-            else {
-                await Order.findByIdAndUpdate(id, req.body).exec();
-                return res.status(200).send({ success: true, message: 'Order succesfully updated' });
-            }
-        } catch (error) {
-            return res.status(500).send({ success: false, message: error?.message });
-        }
-    };
-
-};
+      return next();
+    } catch (error: unknown) {
+      res.status(500).send({
+        success: false,
+        error,
+        message: "Error when trying to update order",
+      });
+      return next(error);
+    }
+  }
+}

@@ -1,11 +1,14 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import { env } from "../env";
 
-async function generateToken(userId) {
-    try {
-        return jwt.sign({ user_id: userId }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
-    } catch (error) {
-        console.log(error);
-    }
-};
+async function generateToken(userId: string) {
+  try {
+    return jwt.sign({ user_id: userId }, env.JWT_SECRET, {
+      expiresIn: env.JWT_EXPIRE,
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
 export { generateToken };

@@ -1,0 +1,791 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "/auth/register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "estani1@test.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "******"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "/auth/login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "estani@test.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "******"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Login successfully"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiOWE3OTlhODZiOTEyYmZkNDBmMzBiIiwiaWF0IjoxNjkwMDM5MTE2LCJleHAiOjE2OTAwNDI3MTZ9.H5JZEMXNl8Lq0E_dXglRqpRZkrSWfc6htpfXukzPdRk"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "/orders",
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/orders/{id}": {
+      "delete": {
+        "summary": "/orders/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "/orders/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/orders/{id}/status/{status}": {
+      "put": {
+        "summary": "/orders/{id}/status/{status}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/points": {
+      "get": {
+        "summary": "/points",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "location": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "placeId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "location",
+                      "_id"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Point"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/points/coordinates/{placeId}": {
+      "get": {
+        "summary": "/points/coordinates/{placeId}",
+        "parameters": [
+          {
+            "name": "placeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Point"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/trucks": {
+      "get": {
+        "summary": "/trucks",
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Truck"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/routes": {
+      "post": {
+        "summary": "/routes",
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Route"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/routes/{id}": {
+      "get": {
+        "summary": "/routes/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Route"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "/routes/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Route"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "/routes/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Expired Token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Route"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Truck"
+    },
+    {
+      "name": "Point"
+    },
+    {
+      "name": "Route"
+    },
+    {
+      "name": "Order"
+    }
+  ],
+  "info": {
+    "title": "api-bego",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3)."
+  },
+  "mongooseModels": [
+    "User",
+    "Truck",
+    "Point",
+    "Route",
+    "Order"
+  ],
+  "components": {
+    "securitySchemes": {
+      "authorization": {
+        "name": "authorization",
+        "in": "header",
+        "type": "apiKey"
+      }
+    },
+    "schemas": {
+      "User": {
+        "title": "User",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Truck": {
+        "title": "Truck",
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "make": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number"
+          },
+          "color": {
+            "type": "string"
+          },
+          "transportWeight": {
+            "type": "number"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Point": {
+        "title": "Point",
+        "properties": {
+          "location": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "placeId": {
+                "type": "string"
+              }
+            }
+          },
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Route": {
+        "title": "Route",
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "distance": {
+            "type": "number"
+          },
+          "_id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Order": {
+        "title": "Order",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "delayed",
+              "inProcess",
+              "completed"
+            ]
+          },
+          "route": {
+            "type": "string"
+          },
+          "truck": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:80"
+    }
+  ]
+}
