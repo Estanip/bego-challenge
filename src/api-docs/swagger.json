@@ -103,13 +103,29 @@
                 },
                 "token": {
                   "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiOWE3OTlhODZiOTEyYmZkNDBmMzBiIiwiaWF0IjoxNjkwMDM5MTE2LCJleHAiOjE2OTAwNDI3MTZ9.H5JZEMXNl8Lq0E_dXglRqpRZkrSWfc6htpfXukzPdRk"
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiOWE3OTlhODZiOTEyYmZkNDBmMzBiIiwiaWF0IjoxNjkwMDQwODAxLCJleHAiOjE2OTAwNDQ0MDF9.2gs-mDmdvclCuou66r1RU95pff0G3oRd3hsFjhNXKy0"
                 }
               }
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid data"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -306,35 +322,6 @@
         ],
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "location": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "placeId": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "_id": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "location",
-                  "_id"
-                ]
-              }
-            }
-          },
           "400": {
             "description": "Bad Request",
             "schema": {
@@ -350,9 +337,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "tags": [
@@ -615,6 +599,16 @@
           "application/json"
         ]
       }
+    },
+    "/login": {
+      "post": {
+        "security": []
+      }
+    },
+    "/register": {
+      "post": {
+        "security": []
+      }
     }
   },
   "tags": [
@@ -788,7 +782,7 @@
   "schemes": [
     "http"
   ],
-  "host": "localhost:80",
+  "host": "localhost",
   "securityDefinitions": {
     "authorization": {
       "name": "authorization",

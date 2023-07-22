@@ -15,6 +15,9 @@ export async function setSwaggerResponse(app) {
         name: "authorization",
       });
 
+      _.set(spec, "paths['/login'].post.security", []);
+      _.set(spec, "paths['/register'].post.security", []);
+
       _.set(spec, "paths['/trucks'].get.security", [{ authorization: [] }]);
 
       _.set(spec, "paths['/orders'].post.security", [{ authorization: [] }]);

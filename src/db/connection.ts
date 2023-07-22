@@ -1,15 +1,11 @@
-import moongose from "mongoose";
-import { load } from "ts-dotenv";
+import mongoose from "mongoose";
+import { env } from "../env";
 
-const { MONGO_URI } = load({ MONGO_URI: String });
-
-const connection = async () => {
+export const connection = async () => {
   try {
-    await moongose.connect(MONGO_URI);
-    console.log("DB Succesfully Connected");
+    await mongoose.connect(env.MONGO_URI);
+    console.log("DB Succesfully Conected");
   } catch (error) {
     console.log(error);
   }
 };
-
-export default connection;

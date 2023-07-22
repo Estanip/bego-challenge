@@ -1,24 +1,21 @@
 import express from "express";
 import cors from "cors";
-import connection from "./db/connection";
+import { connection } from "./db/connection";
 import { Routes } from "./routes/index";
 import { validateToken } from "./middlewares/validateToken";
 import { setSwaggerResponse, setSwaggerRequest } from "./utils/swagger";
-
-/* ENV VARIABLES */
 import { loadEnv } from "./env";
-loadEnv();
+
 class App {
-  public app;
+  public app = express();
   public routes: Routes = new Routes();
-  public connection = connection();
 
   constructor() {
-    this.app = express();
-
+    loadEnv();
     setSwaggerResponse(this.app);
     this.setConfig();
     this.setRoutes();
+    connection();
     setSwaggerRequest();
   }
 
