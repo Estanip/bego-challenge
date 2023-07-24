@@ -12,12 +12,7 @@ async function validateToken(req: Request, res: Response, next: NextFunction) {
     if (req?.url?.includes("/api-docs/") || req?.url?.includes("/auth"))
       return next();
     else if (req?.url != "/api-docs/") {
-      let token;
-      if (req?.headers?.referer?.includes("/api-docs/")) {
-        token = req.headers.authorization as string;
-      } else {
-        token = req.headers.access_token as string;
-      }
+      const token = req.headers.access_token as string;
 
       if (token) {
         jwt.verify(token, env.JWT_SECRET, (error: Error, user: User) => {

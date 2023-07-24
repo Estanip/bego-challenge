@@ -7,58 +7,12 @@
         "consumes": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "estani1@test.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "******"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "User already exists"
-                }
-              }
-            }
-          }
-        },
+        "parameters": [],
+        "responses": {},
         "tags": [
           "User"
         ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "authorization": []
-          }
-        ]
+        "security": []
       }
     },
     "/auth/login": {
@@ -103,26 +57,7 @@
                 },
                 "token": {
                   "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiOWE3OTlhODZiOTEyYmZkNDBmMzBiIiwiaWF0IjoxNjkwMDQwODAxLCJleHAiOjE2OTAwNDQ0MDF9.2gs-mDmdvclCuou66r1RU95pff0G3oRd3hsFjhNXKy0"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Invalid data"
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRiOWE3OTlhODZiOTEyYmZkNDBmMzBiIiwiaWF0IjoxNjkwMjA2Njc0LCJleHAiOjE2OTAyMTAyNzR9.fppKIYCo4CnnbvOJ8VwoouMkYAXPBL8b5uedXOasA5Y"
                 }
               }
             }
@@ -131,13 +66,9 @@
         "tags": [
           "User"
         ],
+        "security": [],
         "produces": [
           "application/json"
-        ],
-        "security": [
-          {
-            "authorization": []
-          }
         ]
       }
     },
@@ -148,34 +79,14 @@
           "application/json"
         ],
         "parameters": [],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Order"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       }
     },
@@ -192,34 +103,14 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Order"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       },
       "put": {
@@ -234,34 +125,14 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Order"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       }
     },
@@ -283,34 +154,14 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Order"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       }
     },
@@ -321,34 +172,14 @@
           "application/json"
         ],
         "parameters": [],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Point"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       }
     },
@@ -365,34 +196,14 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Point"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       }
     },
@@ -404,6 +215,47 @@
         ],
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "make": {
+                    "type": "string"
+                  },
+                  "year": {
+                    "type": "number"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "transportWeight": {
+                    "type": "number"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "_id",
+                  "model",
+                  "make",
+                  "year",
+                  "color",
+                  "transportWeight",
+                  "created_at"
+                ]
+              }
+            }
+          },
           "400": {
             "description": "Bad Request",
             "schema": {
@@ -415,7 +267,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Expired Token"
+                  "example": "Token validation error"
                 }
               }
             }
@@ -426,7 +278,7 @@
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
         ],
         "produces": [
@@ -441,34 +293,14 @@
           "application/json"
         ],
         "parameters": [],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Route"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       }
     },
@@ -485,34 +317,14 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Route"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       },
       "put": {
@@ -527,34 +339,14 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Route"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
       },
       "delete": {
@@ -569,45 +361,15 @@
             "required": true
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Expired Token"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": [
           "Route"
         ],
         "security": [
           {
-            "authorization": []
+            "access_token": []
           }
-        ],
-        "produces": [
-          "application/json"
         ]
-      }
-    },
-    "/login": {
-      "post": {
-        "security": []
-      }
-    },
-    "/register": {
-      "post": {
-        "security": []
       }
     }
   },
@@ -763,31 +525,15 @@
     },
     "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3)."
   },
-  "mongooseModels": [
-    "User",
-    "Truck",
-    "Point",
-    "Route",
-    "Order"
-  ],
-  "components": {
-    "securitySchemes": {
-      "authorization": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "authorization"
-      }
+  "securityDefinitions": {
+    "access_token": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "access_token"
     }
   },
   "schemes": [
     "http"
   ],
-  "host": "localhost",
-  "securityDefinitions": {
-    "authorization": {
-      "name": "authorization",
-      "in": "header",
-      "type": "apiKey"
-    }
-  }
+  "host": "localhost:81"
 }
